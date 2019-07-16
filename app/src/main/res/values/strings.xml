@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">checkpoint4</string>
+    <string name="create_account">Créer un compte</string>
+    <string name="to_connect">Se connecter</string>
+    <string name="enter_pwd">Entre ton mot de passe</string>
+    <string name="enter_email">Entre ton Email</string>
+    <string name="create">Créer un compte</string>
 </resources>
