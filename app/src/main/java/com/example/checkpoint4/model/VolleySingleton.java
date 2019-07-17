@@ -12,16 +12,20 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -30,6 +34,7 @@ public class VolleySingleton {
     private static final String API_URL = "http://192.168.8.124:8081/";
     private static final String API_SIGN_IN = API_URL + "user/search";
     private static final String API_SIGN_UP = API_URL + "user";
+    private static final String API_CIRCUS = API_URL + "circus";
 
     private static VolleySingleton instance;
     private static Context context;
@@ -57,52 +62,6 @@ public class VolleySingleton {
 
     public <T> void addToRequestQueue(Request<T> req) {
         getRequestQueue().add(req);
-    }
-
-    public void signUp(User user, final Consumer<User> listener) {
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        final Gson gson = gsonBuilder.create();
-
-        final String requestBody = gson.toJson(user);
-
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
-                API_SIGN_UP, null, new Response.Listener<JSONObject>() {
-
-            @Override
-            public void onResponse(JSONObject response) {
-                User user = gson.fromJson(response.toString(), User.class);
-                listener.accept(user);
-            }
-        }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                new AlertDialog.Builder(context)
-                        .setTitle("Error")
-                        .setMessage("Something went wrong !")
-                        .show();
-            }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("Content-Type", "application/json");
-                return headers;
-            }
-
-            @Override
-            public byte[] getBody() {
-                try {
-                    return requestBody == null ? null : requestBody.getBytes("utf-8");
-                } catch (UnsupportedEncodingException uee) {
-                    VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s",
-                            requestBody, "utf-8");
-                    return null;
-                }
-            }
-        };
-
-        addToRequestQueue(jsonObjectRequest);
     }
 
     public void getUserByEmail(User user, final Consumer<Authentication> listener) {
@@ -180,6 +139,34 @@ public class VolleySingleton {
                 return null;
             }
         };
+        requestQueue.add(jsonObjectRequest);
+    }
+
+    public void getCircus(final Consumer<List<Circus>> listener) {
+        String url = API_CIRCUS ;
+
+        final JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(
+                Request.Method.GET, url, null,
+                new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.d("VOLLEY_SUCCESS", response.toString());
+                        GsonBuilder gsonBuilder = new GsonBuilder();
+                        gsonBuilder.setDateFormat("M/d/yy hh:mm a");
+                        Gson gson = gsonBuilder.create();
+                        List<Circus> circuses = Arrays.asList(gson.fromJson(response.toString(), Circus[].class));
+                        listener.accept(circuses);
+                    }
+                },
+                new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("VOLLEY_ERROR", "onErrorResponse: " + error.getMessage());
+                    }
+                }
+        );
         requestQueue.add(jsonObjectRequest);
     }
 
