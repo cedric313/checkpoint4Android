@@ -144,27 +144,25 @@ public class VolleySingleton {
         requestQueue.add(jsonObjectRequest);
     }
 
-    public void signIn(User user, final Consumer<User> listener) {
+    public void createUser(final User user, final Consumer<User> listener) {
         GsonBuilder gsonBuilder = new GsonBuilder();
         final Gson gson = gsonBuilder.create();
+        String url = API_SIGN_UP;
         final String requestBody = gson.toJson(user);
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
-                API_SIGN_IN, null, new Response.Listener<JSONObject>() {
-
+                url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
+                Log.d("VOLLEY_SUCCESS", response.toString());
                 User user = gson.fromJson(response.toString(), User.class);
                 listener.accept(user);
             }
         }, new Response.ErrorListener() {
-
             @Override
             public void onErrorResponse(VolleyError error) {
-                new AlertDialog.Builder(context)
-                        .setTitle("Error")
-                        .setMessage("Your email or password are invalid !")
-                        .show();
+                listener.accept(null);
+                VolleyLog.e("Error: ", error.getMessage());
             }
         }) {
             @Override
@@ -176,17 +174,13 @@ public class VolleySingleton {
 
             @Override
             public byte[] getBody() {
-                try {
-                    return requestBody == null ? null : requestBody.getBytes("utf-8");
-                } catch (UnsupportedEncodingException uee) {
-                    VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s",
-                            requestBody, "utf-8");
-                    return null;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    return requestBody == null ? null : requestBody.getBytes(StandardCharsets.UTF_8);
                 }
+                return null;
             }
         };
-
-        addToRequestQueue(jsonObjectRequest);
+        requestQueue.add(jsonObjectRequest);
     }
 
 }
