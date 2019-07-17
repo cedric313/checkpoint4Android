@@ -2,6 +2,9 @@ package com.example.checkpoint4.model;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.os.Build;
+import android.support.v4.util.Consumer;
+import android.util.Log;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -17,9 +20,10 @@ import com.google.gson.GsonBuilder;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Consumer;
+
 
 public class VolleySingleton {
 
@@ -101,7 +105,46 @@ public class VolleySingleton {
         addToRequestQueue(jsonObjectRequest);
     }
 
-    public void signIn(User user, final VolleyListener<User> listener) {
+    public void getUserByEmail(User user, final Consumer<Authentication> listener) {
+        String url = API_SIGN_IN;
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        final Gson gson = gsonBuilder.create();
+        final String requestBody = gson.toJson(user);
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
+                url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d("VOLLEY_SUCCESS", response.toString());
+                Authentication authentication = gson.fromJson(response.toString(), Authentication.class);
+                listener.accept(authentication);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                listener.accept(null);
+                VolleyLog.e("Error: ", error.getMessage());
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+
+            @Override
+            public byte[] getBody() {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    return requestBody == null ? null : requestBody.getBytes(StandardCharsets.UTF_8);
+                }
+                return null;
+            }
+        };
+        requestQueue.add(jsonObjectRequest);
+    }
+
+    public void signIn(User user, final Consumer<User> listener) {
         GsonBuilder gsonBuilder = new GsonBuilder();
         final Gson gson = gsonBuilder.create();
         final String requestBody = gson.toJson(user);
@@ -145,10 +188,5 @@ public class VolleySingleton {
 
         addToRequestQueue(jsonObjectRequest);
     }
-
-    public interface VolleyListener<T> {
-        void accept(T user);
-    }
-
 
 }

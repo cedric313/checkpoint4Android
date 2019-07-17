@@ -1,6 +1,7 @@
 package com.example.checkpoint4.activitity;
 
 import android.content.Intent;
+import android.support.v4.util.Consumer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.checkpoint4.R;
+import com.example.checkpoint4.model.Authentication;
 import com.example.checkpoint4.model.User;
 import com.example.checkpoint4.model.UserSingleton;
 import com.example.checkpoint4.model.VolleySingleton;
@@ -29,17 +31,17 @@ public class ConnexionActivity extends AppCompatActivity {
                 EditText email = findViewById(R.id.etEmail);
                 EditText pwd = findViewById(R.id.etPassword);
 
-                UserSingleton userSingleton = UserSingleton.getInstance();
-                User user = userSingleton.getUser();
+                final UserSingleton userSingleton = UserSingleton.getInstance();
+                User user = new User();
 
                 user.setEmail(email.getText().toString());
                 user.setPassword(pwd.getText().toString());
 
-                VolleySingleton.getInstance(ConnexionActivity.this).signIn(user, new VolleySingleton.VolleyListener<User>() {
+                VolleySingleton.getInstance(ConnexionActivity.this).getUserByEmail(user, new Consumer<Authentication>() {
                     @Override
-                    public void accept(User user) {
-
-                        Toast.makeText(ConnexionActivity.this, user.getEmail(), Toast.LENGTH_LONG).show();
+                    public void accept(Authentication authentication) {
+                        userSingleton.setUser(authentication.getUser());
+                        Toast.makeText(ConnexionActivity.this, authentication.getUser().getEmail(), Toast.LENGTH_LONG).show();
                         startActivity(new Intent(ConnexionActivity.this,EventActivity.class));
 
                     }
