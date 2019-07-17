@@ -3,18 +3,22 @@ package com.example.checkpoint4.model;
 public class Rider {
 
     private String name;
-    private String firstname;
+    private String firstName;
     private int age;
     private String nationality;
+    private String urlPicRider;
 
-    public Rider(String name, String firstname, int age, String nationality) {
-        this.name = name;
-        this.firstname = firstname;
-        this.age = age;
-        this.nationality = nationality;
-    }
+
 
     public Rider() {
+    }
+
+    public Rider(String name, String firstName, int age, String nationality, String urlPicRider) {
+        this.name = name;
+        this.firstName = firstName;
+        this.age = age;
+        this.nationality = nationality;
+        this.urlPicRider = urlPicRider;
     }
 
     public String getName() {
@@ -25,12 +29,12 @@ public class Rider {
         this.name = name;
     }
 
-    public String getFirstname() {
-        return firstname;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public int getAge() {
@@ -47,5 +51,13 @@ public class Rider {
 
     public void setNationality(String nationality) {
         this.nationality = nationality;
+    }
+
+    public String getUrlPicRider() {
+        return urlPicRider;
+    }
+
+    public void setUrlPicRider(String urlPicRider) {
+        this.urlPicRider = urlPicRider;
     }
 }

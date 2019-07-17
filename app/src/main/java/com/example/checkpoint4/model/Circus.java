@@ -5,14 +5,26 @@ public class Circus {
     private String name;
     private String date;
     private String location;
+    private String urlPhoto;
 
-    public Circus(String name, String date, String location) {
+
+
+    public Circus() {
+    }
+
+    public String getUrlPhoto() {
+        return urlPhoto;
+    }
+
+    public void setUrlPhoto(String urlPhoto) {
+        this.urlPhoto = urlPhoto;
+    }
+
+    public Circus(String name, String date, String location, String urlPhoto) {
         this.name = name;
         this.date = date;
         this.location = location;
-    }
-
-    public Circus() {
+        this.urlPhoto = urlPhoto;
     }
 
     public String getName() {
