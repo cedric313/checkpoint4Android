@@ -5,4 +5,16 @@
     <string name="enter_pwd">Entre ton mot de passe</string>
     <string name="enter_email">Entre ton Email</string>
     <string name="create">Créer un compte</string>
+    <string name="non">non</string>
+    <string name="oui">oui</string>
+    <string name="formatEmailInvalide">Format de l\'email invalide</string>
+    <string name="adresseEmailPasCorrectementFormatee">l\'adresse email n\'est pas correctement formatée</string>
+    <string name="ok">ok</string>
+    <string name="vérifier_connexion">Vérifier votre connexion</string>
+    <string name="veuillez_verifier_connexion">Veuillez vérifier votre connexion</string>
+    <string name="error_password">Erreur mot de passe</string>
+    <string name="error_email">Erreur email</string>
+    <string name="erreurEmail">erreur Email</string>
+    <string name="warning">warning</string>
+    <string name="veuillezRenseigner">Veuillez renseigner votre Email</string>
 </resources>
