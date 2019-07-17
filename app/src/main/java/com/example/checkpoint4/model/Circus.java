@@ -2,6 +2,7 @@ package com.example.checkpoint4.model;
 
 public class Circus {
 
+    private Long id;
     private String name;
     private String date;
     private String location;
@@ -12,6 +13,14 @@ public class Circus {
     public Circus() {
     }
 
+    public Circus(Long id, String name, String date, String location, String urlPhoto) {
+        this.id = id;
+        this.name = name;
+        this.date = date;
+        this.location = location;
+        this.urlPhoto = urlPhoto;
+    }
+
     public String getUrlPhoto() {
         return urlPhoto;
     }
@@ -20,12 +29,7 @@ public class Circus {
         this.urlPhoto = urlPhoto;
     }
 
-    public Circus(String name, String date, String location, String urlPhoto) {
-        this.name = name;
-        this.date = date;
-        this.location = location;
-        this.urlPhoto = urlPhoto;
-    }
+
 
     public String getName() {
         return name;
@@ -49,5 +53,13 @@ public class Circus {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
