@@ -1,6 +1,5 @@
 package com.example.checkpoint4.model;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Build;
 import android.support.v4.util.Consumer;
@@ -21,7 +20,6 @@ import com.google.gson.GsonBuilder;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -35,6 +33,7 @@ public class VolleySingleton {
     private static final String API_SIGN_IN = API_URL + "user/search";
     private static final String API_SIGN_UP = API_URL + "user";
     private static final String API_CIRCUS = API_URL + "circus";
+    private static final String API_RIDERS = API_URL + "rider";
 
     private static VolleySingleton instance;
     private static Context context;
@@ -143,7 +142,7 @@ public class VolleySingleton {
     }
 
     public void getCircus(final Consumer<List<Circus>> listener) {
-        String url = API_CIRCUS ;
+        String url = API_CIRCUS;
 
         final JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(
                 Request.Method.GET, url, null,
@@ -157,6 +156,34 @@ public class VolleySingleton {
                         Gson gson = gsonBuilder.create();
                         List<Circus> circuses = Arrays.asList(gson.fromJson(response.toString(), Circus[].class));
                         listener.accept(circuses);
+                    }
+                },
+                new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("VOLLEY_ERROR", "onErrorResponse: " + error.getMessage());
+                    }
+                }
+        );
+        requestQueue.add(jsonObjectRequest);
+    }
+
+    public void getRiders(final Consumer<List<Rider>> listener) {
+        String url = API_RIDERS;
+
+        final JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(
+                Request.Method.GET, url, null,
+                new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.d("VOLLEY_SUCCESS", response.toString());
+                        GsonBuilder gsonBuilder = new GsonBuilder();
+                        gsonBuilder.setDateFormat("M/d/yy hh:mm a");
+                        Gson gson = gsonBuilder.create();
+                        List<Rider> riders = Arrays.asList(gson.fromJson(response.toString(), Rider[].class));
+                        listener.accept(riders);
                     }
                 },
                 new Response.ErrorListener() {

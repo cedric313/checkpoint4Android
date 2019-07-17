@@ -1,12 +1,8 @@
 package com.example.checkpoint4.activitity;
 
+import android.os.Bundle;
 import android.support.v4.util.Consumer;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.checkpoint4.R;
@@ -24,7 +20,6 @@ public class EventActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event);
-
 
         UserSingleton user = UserSingleton.getInstance();
 
