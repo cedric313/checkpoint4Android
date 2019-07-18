@@ -1,25 +1,29 @@
 package com.example.checkpoint4.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Circus {
 
-    private Long id;
+    private Long idCircus;
     private String name;
     private String date;
     private String location;
     private String urlPhoto;
-
-
+    private List<Rider> riders = new ArrayList<>();
 
     public Circus() {
     }
 
-    public Circus(Long id, String name, String date, String location, String urlPhoto) {
-        this.id = id;
+    public Circus(Long idCircus, String name, String date, String location, String urlPhoto, List<Rider> riders) {
+        this.idCircus = idCircus;
         this.name = name;
         this.date = date;
         this.location = location;
         this.urlPhoto = urlPhoto;
+        this.riders = riders;
     }
+
 
     public String getUrlPhoto() {
         return urlPhoto;
@@ -28,8 +32,6 @@ public class Circus {
     public void setUrlPhoto(String urlPhoto) {
         this.urlPhoto = urlPhoto;
     }
-
-
 
     public String getName() {
         return name;
@@ -55,11 +57,19 @@ public class Circus {
         this.location = location;
     }
 
-    public Long getId() {
-        return id;
+    public Long getIdCircus() {
+        return idCircus;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setIdCircus(Long idCircus) {
+        this.idCircus = idCircus;
+    }
+
+    public List<Rider> getRiders() {
+        return riders;
+    }
+
+    public void setRiders(List<Rider> riders) {
+        this.riders = riders;
     }
 }

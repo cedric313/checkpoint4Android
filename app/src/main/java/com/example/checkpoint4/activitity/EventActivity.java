@@ -26,13 +26,9 @@ public class EventActivity extends AppCompatActivity {
         VolleySingleton.getInstance(EventActivity.this).getCircus(new Consumer<List<Circus>>() {
             @Override
             public void accept(List<Circus> circuses) {
-                ArrayList<Circus> circusList = new ArrayList<>();
-                for (Circus circus : circuses) {
-                    circusList.add(circus);
 
-                }
                 ListView listCircus = findViewById(R.id.lvListCircus);
-                CircusAdapter adapter = new CircusAdapter(EventActivity.this, circusList);
+                CircusAdapter adapter = new CircusAdapter(EventActivity.this, circuses);
                 listCircus.setAdapter(adapter);
 
             }

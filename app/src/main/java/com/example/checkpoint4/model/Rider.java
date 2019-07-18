@@ -2,6 +2,7 @@ package com.example.checkpoint4.model;
 
 public class Rider {
 
+    private Long idRider;
     private String name;
     private String firstName;
     private int age;
@@ -13,13 +14,15 @@ public class Rider {
     public Rider() {
     }
 
-    public Rider(String name, String firstName, int age, String nationality, String urlPicRider) {
+    public Rider(Long idRider, String name, String firstName, int age, String nationality, String urlPicRider) {
+        this.idRider = idRider;
         this.name = name;
         this.firstName = firstName;
         this.age = age;
         this.nationality = nationality;
         this.urlPicRider = urlPicRider;
     }
+
 
     public String getName() {
         return name;
@@ -59,5 +62,13 @@ public class Rider {
 
     public void setUrlPicRider(String urlPicRider) {
         this.urlPicRider = urlPicRider;
+    }
+
+    public Long getIdRider() {
+        return idRider;
+    }
+
+    public void setIdRider(Long idRider) {
+        this.idRider = idRider;
     }
 }

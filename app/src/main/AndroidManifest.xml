@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activitity.RiderActivity"></activity>
+        <activity android:name=".activitity.FavorisActivity"></activity>
+        <activity android:name=".activitity.RiderActivity" />
         <activity android:name=".activitity.EventActivity" />
         <activity android:name=".activitity.CreateAccountActivity" />
         <activity android:name=".activitity.ConnexionActivity" />

@@ -40,7 +40,7 @@ public class CircusAdapter extends ArrayAdapter<Circus> {
         ImageView circusImage = convertView.findViewById(R.id.ivCircus);
 
         circusName.setText(item.getName());
-        final Long circusId = item.getId();
+        final Long circusId = item.getIdCircus();
         circusDate.setText(item.getDate());
         circusLocation.setText(item.getLocation());
         btLookRiders.setFocusable(true);
@@ -52,7 +52,6 @@ public class CircusAdapter extends ArrayAdapter<Circus> {
                 Intent zoom = new Intent(parent.getContext(), RiderActivity.class);
                 parent.getContext().startActivity(zoom);
                 zoom.putExtra("ID_CIRCUS", circusId);
-                boolean ok = true;
             }
         });
 

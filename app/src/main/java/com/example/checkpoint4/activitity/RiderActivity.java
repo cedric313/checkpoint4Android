@@ -23,13 +23,9 @@ public class RiderActivity extends AppCompatActivity {
         VolleySingleton.getInstance(getApplicationContext()).getRiders(new Consumer<List<Rider>>() {
             @Override
             public void accept(List<Rider> riders) {
-                ArrayList<Rider> riderList = new ArrayList<>();
-                for (Rider rider : riders) {
-                    riderList.add(rider);
 
-                }
                 ListView listRider = findViewById(R.id.lvListRiders);
-                RiderAdapter adapter = new RiderAdapter(RiderActivity.this, riderList);
+                RiderAdapter adapter = new RiderAdapter(RiderActivity.this, riders);
                 listRider.setAdapter(adapter);
             }
         });
